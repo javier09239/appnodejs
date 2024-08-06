@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const https = require('https');
+/*const https = require('https');*/
 const fs = require('fs');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 // const { connect } = require("http2");
 
 class Server {
@@ -17,11 +17,11 @@ class Server {
         // this.conectarMongoose();
     }
 
-    // conectarMongoose() {
+        conectarMongoose() {
     //     //conexion a mongodb
-    //     this.mongoose.connect('mongodb://localhost:27017/empresa');
+         this.mongoose.connect('mongodb://localhost:27017/empresa');
 
-    //     //agregar esquema 
+            //agregar esquema 
     //     let schemaEmpleado = new this.mongoose.Schema({
     //         nombre: String,
     //         numero: String,
@@ -128,11 +128,12 @@ class Server {
     }
 
     listen() {
-        https.createServer({
+        /*https.createServer({
             key: fs.readFileSync('cert.key'),
             cert: fs.readFileSync('cert.crt'),
             // passphrase:'1234',
-        }, this.app).listen(this.port, () => {
+        },*/
+        this.app).listen(this.port, () => {
             console.log('https://127.0.0.1:' + this.port);
         });
 
