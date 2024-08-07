@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-/*const https = require('https');*/
+// const https = require('https');
 const fs = require('fs');
 const mongoose = require('mongoose');
 // const { connect } = require("http2");
@@ -12,52 +12,54 @@ class Server {
         // this.mongoose = mongoose;
 
         this.middlewares();
-        this.listen();
         this.routes();
+        this.listen();
         // this.conectarMongoose();
     }
 
-        conectarMongoose() {
-    //     //conexion a mongodb
-         this.mongoose.connect('mongodb://localhost:27017/empresa');
+    conectarMongoose() {
+        // Conexión a MongoDB
+        this.mongoose.connect('mongodb://localhost:27017/empresa', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
 
-            //agregar esquema 
-    //     let schemaEmpleado = new this.mongoose.Schema({
-    //         nombre: String,
-    //         numero: String,
-    //         puesto: String,
-    //         departamento: String
-    //     });
-    //     this.Empleados = this.mongoose.model('Empleados', schemaEmpleado, 'Empleados');
+        // Agregar esquema Empleado
+        // let schemaEmpleado = new this.mongoose.Schema({
+        //     nombre: String,
+        //     numero: String,
+        //     puesto: String,
+        //     departamento: String
+        // });
+        // this.Empleados = this.mongoose.model('Empleados', schemaEmpleado, 'Empleados');
 
-    //     //agregar esquema riego
-    //     let schemaRiego = new this.mongoose.Schema({
-    //         estado: String
-    //     });
-    //     this.Riego = this.mongoose.model('Riego', schemaRiego, 'Riego');
-
-    // }
+        // Agregar esquema Riego
+        // let schemaRiego = new this.mongoose.Schema({
+        //     estado: String
+        // });
+        // this.Riego = this.mongoose.model('Riego', schemaRiego, 'Riego');
+    }
 
     middlewares() {
-        //paginas estaticas
+        // Páginas estáticas
         this.app.use(express.static('public'));
-        //agregar cors
+        // Agregar CORS
         this.app.use(cors());
     }
 
     routes() {
         this.app.get("/encenderRiego", async (req, res) => {
-            //cambiar estado =1 en la base de datos
-            console.log("encendiendo...");
-            // await this.Riego.updateOne({}, {estado: "1"}, {upsert:true})
-            res.status(200).send('ok encendido');
+            // Cambiar estado =1 en la base de datos
+            console.log("Encendiendo...");
+            // await this.Riego.updateOne({}, { estado: "1" }, { upsert: true })
+            res.status(200).send('Ok encendido');
         });
 
         this.app.get("/apagarRiego", async (req, res) => {
-            //cambiar estado =0 en la base de datos
-            console.log("apagando...");
-            // await this.Riego.updateOne({}, {estado: "0"}, {upsert:true})
-            res.status(200).send('ok apagado');
+            // Cambiar estado =0 en la base de datos
+            console.log("Apagando...");
+            // await this.Riego.updateOne({}, { estado: "0" }, { upsert: true })
+            res.status(200).send('Ok apagado');
         });
 
         this.app.get("/consultar", async (req, res) => {
@@ -82,17 +84,17 @@ class Server {
             //     departamento: departamento
             // });
             // empleado1.save();
-            res.send("ok");
+            res.send("Ok");
         });
 
         // this.app.get("/registrarEstado", (req, res) => {
         //     let estado = req.query.estado;
 
-        //     let esatdo1 = new this.Riego({
+        //     let estado1 = new this.Riego({
         //         estado: estado
         //     });
-        //     esatdo1.save();
-        //     res.send("ok");
+        //     estado1.save();
+        //     res.send("Ok");
         // });
 
         // this.app.get("/consultar", async (req, res) => {
@@ -108,16 +110,15 @@ class Server {
         //     }
         // });
 
-        //agregar una ruta para consultar registros(tema libre)
+        // Agregar una ruta para consultar registros (tema libre)
         this.app.get("/pokemon", (req, res) => {
             console.log("Ruta pokemon...");
 
             let pokemon = {
-                "pokemon":
-                    [{
-                        "nombre": "charizard", "num_pokedex": "658"
-                    },
-                    { "nombre": "Greninja", "num_pokedex": "658" }],
+                "pokemon": [
+                    { "nombre": "charizard", "num_pokedex": "658" },
+                    { "nombre": "Greninja", "num_pokedex": "658" }
+                ],
                 "entrenador": [
                     { "nombre": "Alejandro", "num": "6554651", "apellido": "f" },
                     { "nombre": "Luis", "num": "6554651", "apellido": "f" }
@@ -128,15 +129,14 @@ class Server {
     }
 
     listen() {
-        /*https.createServer({
+        /* https.createServer({
             key: fs.readFileSync('cert.key'),
             cert: fs.readFileSync('cert.crt'),
             // passphrase:'1234',
-        },*/
+        }, () => { */
         this.app.listen(this.port, () => {
             console.log('https://127.0.0.1:' + this.port);
         });
-
     }
 }
 
