@@ -133,7 +133,7 @@ class Server {
             cert: fs.readFileSync('cert.crt'),
             // passphrase:'1234',
         },*/
-        this.app).listen(this.port, () => {
+        this.app.listen(this.port, () => {
             console.log('https://127.0.0.1:' + this.port);
         });
 
